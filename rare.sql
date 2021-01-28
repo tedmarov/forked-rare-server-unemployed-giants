@@ -1,3 +1,18 @@
+CREATE TABLE "Users" (
+  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "first_name" varchar,
+  "last_name" varchar,
+  "email" varchar,
+  "bio" varchar,
+  "username" varchar,
+  "password" varchar,
+  "profile_image_url" varchar,
+  "created_on" date,
+  "active" bit,
+  "account_type_id" INTEGER,
+  FOREIGN KEY(`account_type_id`) REFERENCES `AccountTypes`(`id`)
+);
+
 CREATE TABLE "AccountTypes" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "label" varchar
@@ -83,7 +98,6 @@ INSERT INTO Categories ('label') VALUES ('Opinion');
 INSERT INTO Categories ('label') VALUES ('How-To');
 INSERT INTO Categories ('label') VALUES ('Editorial');
 INSERT INTO Categories ('label') VALUES ("Here's something dumb");
-
 INSERT INTO Tags ('label') VALUES ('JavaScript');
 INSERT INTO Tags ('label') VALUES ('React');
 INSERT INTO Tags ('label') VALUES ('Angular');
