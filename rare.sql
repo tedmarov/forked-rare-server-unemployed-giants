@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 CREATE TABLE "Users" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "first_name" varchar,
@@ -209,4 +211,5 @@ INSERT INTO AccountTypes ('label')
 VALUES ('Admin');
 INSERT INTO AccountTypes ('label')
 VALUES ('Author');
+>>>>>>> main
 >>>>>>> main

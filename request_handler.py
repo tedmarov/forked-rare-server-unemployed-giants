@@ -1,5 +1,5 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from users import register_user
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from categories import get_all_categories, create_category
@@ -70,8 +70,11 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Initialize new animal
+        # Initialize new 
         new_resource = None
+        
+        if resource == "register":
+            new_resource = register_user(post_body)
 
         if resource == "categories":
             new_resource = create_category(post_body)
