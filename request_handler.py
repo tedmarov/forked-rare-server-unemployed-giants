@@ -1,12 +1,14 @@
+import json
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
-from categories import get_all_categories
+from categories import get_all_categories, create_category
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
 # work together for a common purpose. In this case, that
 # common purpose is to respond to HTTP requests from a client.
+
+
 class HandleRequests(BaseHTTPRequestHandler):
 
     # Here's a class function
@@ -37,7 +39,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         parsed = self.parse_url(self.path)
 
         if len(parsed) == 2:
-            ( resource, id ) = parsed
+            (resource, id) = parsed
 
             if resource == "comments":
                 if id is None:
@@ -63,9 +65,11 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Initialize new animal
+        # Initialize new resource variable
         new_resource = None
 
+        if resource == "categories":
+            new_resource = create_category(post_body)
         if resource == "comments":
             new_resource = create_comment(post_body)
 
@@ -83,7 +87,6 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        
         self.wfile.write("".encode())
 
     def do_DELETE(self):
@@ -113,7 +116,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             key = pair[0]  # 'email'
             value = pair[1]  # 'jenna@solis.com'
 
-            return ( resource, key, value )
+            return (resource, key, value)
 
         # No query string parameter
         else:
@@ -127,6 +130,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 pass  # Request had trailing slash: /animals/
 
             return (resource, id)
+
+
 def main():
     host = ''
     port = 8088
