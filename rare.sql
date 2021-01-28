@@ -83,7 +83,6 @@ INSERT INTO Categories ('label') VALUES ('Opinion');
 INSERT INTO Categories ('label') VALUES ('How-To');
 INSERT INTO Categories ('label') VALUES ('Editorial');
 INSERT INTO Categories ('label') VALUES ("Here's something dumb");
-
 INSERT INTO Tags ('label') VALUES ('JavaScript');
 INSERT INTO Tags ('label') VALUES ('React');
 INSERT INTO Tags ('label') VALUES ('Angular');
@@ -110,9 +109,7 @@ INSERT INTO Tags ('label') VALUES ('Rails');
 INSERT INTO Tags ('label') VALUES ('Go');
 INSERT INTO Tags ('label') VALUES ('C++');
 INSERT INTO Tags ('label') VALUES ('History Lesson');
-
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('heart', 'https://lh3.googleusercontent.com/proxy/BlwtWdiO1ucoroiKKuJN5CpiAUFA4tdHYRT_yXzxWLpNVTJS7UEVp1JV-lYshjAPeS7wd1pqXk6mpxY6rrSAPXD5NbBoE9hTf-1PpzofQbzNyH__1miggtO2IQKktovnAyPzjCW6T9mQG6JvgdHklZUaMd-YnIxeBPuP1lBw2E7fp9d6AR68');
-
 INSERT INTO AccountTypes ('label') VALUES ('Admin');
 INSERT INTO AccountTypes ('label') VALUES ('Author');
