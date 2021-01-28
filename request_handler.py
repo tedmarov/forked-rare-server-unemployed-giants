@@ -1,12 +1,17 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from users import register_user
-
+from comments import create_comment, delete_comment, get_all_comments
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from categories import get_all_categories, create_category
+from posts import get_all_posts
+from posts import create_post
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
 # work together for a common purpose. In this case, that
 # common purpose is to respond to HTTP requests from a client.
+
+
 class HandleRequests(BaseHTTPRequestHandler):
 
     # Here's a class function
@@ -35,6 +40,20 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse URL and store entire tuple in a variable
         parsed = self.parse_url(self.path)
+      
+        if len(parsed) == 2:
+            (resource, id) = parsed
+            if resource == "posts":
+                if id is None:
+                    response = f"{get_all_posts()}"
+            if resource == "comments":
+                if id is None:
+                    response = f"{get_all_comments()}"
+            if resource == "categories":
+                if id is None:
+                    response = f"{get_all_categories()}"
+                elif id is not None:
+                    pass
 
         self.wfile.write(response.encode())
 
@@ -57,6 +76,13 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == "register":
             new_resource = register_user(post_body)
 
+        if resource == "categories":
+            new_resource = create_category(post_body)
+        if resource == "comments":
+            new_resource = create_comment(post_body)
+        if resource == "posts":
+            new_resource = create_post(post_body)
+
         self.wfile.write(f"{new_resource}".encode())
 
     # Here's a method on the class that overrides the parent's method.
@@ -71,7 +97,6 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        
         self.wfile.write("".encode())
 
     def do_DELETE(self):
@@ -80,6 +105,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
+
+        if resource == "comments":
+            delete_comment(id)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
@@ -98,7 +126,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             key = pair[0]  # 'email'
             value = pair[1]  # 'jenna@solis.com'
 
-            return ( resource, key, value )
+            return (resource, key, value)
 
         # No query string parameter
         else:
