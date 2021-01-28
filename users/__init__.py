@@ -1,1 +1,1 @@
-from request import register_user
+from .request import register_user

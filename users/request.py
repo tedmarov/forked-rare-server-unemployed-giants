@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import User
+from models.users import User
 from datetime import date
 
 def register_user(user):
@@ -10,10 +10,10 @@ def register_user(user):
         #Set values passed in from form
         db_cursor.execute("""
         INSERT INTO Users
-            ( first_name, last_name, email, bio, username, password, profile_image_url, active)
+            ( first_name, last_name, email, password, bio, username, profile_image_url, active)
         VALUES
             ( ?, ?, ?, ?, ?, ?, ?, ? );
-        """, (user['first_name'], u['last_name'], user['email'], user['bio'], user['username'], user['password'], user['profile_image_url'], user['active']))
+        """, (user['first_name'], user['last_name'], user['email'], user['password'], user['bio'], user['username'], user['profile_image_url'], user['active']))
 
         #Set id to id of last row, set created on to now, and account type to 1 for all (for now)
         id = db_cursor.lastrowid
