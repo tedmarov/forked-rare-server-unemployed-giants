@@ -1,1 +1,1 @@
-from .resource import get_all_categories
+from .request import get_all_categories
