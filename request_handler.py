@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from users import register_user
 
 
 # Here's a class. It inherits from another class.
@@ -50,8 +51,11 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Initialize new animal
+        # Initialize new 
         new_resource = None
+        
+        if resource == "register":
+            new_resource = register_user(post_body)
 
         self.wfile.write(f"{new_resource}".encode())
 
