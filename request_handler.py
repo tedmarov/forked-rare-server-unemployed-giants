@@ -1,6 +1,7 @@
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from categories import get_all_categories
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -41,6 +42,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             if resource == "comments":
                 if id is None:
                     response = f"{get_all_comments()}"
+            if resource == "categories":
+                if id is None:
+                    response = f"{get_all_categories()}"
                 elif id is not None:
                     pass
 
