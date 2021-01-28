@@ -1,7 +1,7 @@
 import json
-from categories.request import create_category
+from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from categories import get_all_categories
+from categories import get_all_categories, create_category
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -41,6 +41,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         if len(parsed) == 2:
             (resource, id) = parsed
 
+            if resource == "comments":
+                if id is None:
+                    response = f"{get_all_comments()}"
             if resource == "categories":
                 if id is None:
                     response = f"{get_all_categories()}"
@@ -67,6 +70,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "categories":
             new_resource = create_category(post_body)
+        if resource == "comments":
+            new_resource = create_comment(post_body)
 
         self.wfile.write(f"{new_resource}".encode())
 
@@ -90,6 +95,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
+
+        if resource == "comments":
+            delete_comment(id)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
