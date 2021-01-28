@@ -1,6 +1,6 @@
-import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from categories import get_all_categories
+import json
+
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -34,15 +34,6 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse URL and store entire tuple in a variable
         parsed = self.parse_url(self.path)
-
-        if len(parsed) == 2:
-            ( resource, id ) = parsed
-
-            if resource == "categories":
-                if id is None:
-                    response = f"{get_all_categories()}"
-                elif id is not None:
-                    pass
 
         self.wfile.write(response.encode())
 

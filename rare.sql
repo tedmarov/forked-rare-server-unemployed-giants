@@ -1,15 +1,3 @@
-Drop Table If Exists `AccountTypes`;
-DROP TABLE IF EXISTS `Categories`;
-DROP TABLE IF EXISTS `Tags`;
-DROP TABLE IF EXISTS `Reactions`;
-DROP TABLE IF EXISTS `PostReactions`;
-DROP TABLE IF EXISTS `Posts`;
-DROP TABLE IF EXISTS `PostTags`;
-DROP TABLE IF EXISTS `Comments`;
-DROP TABLE IF EXISTS `Subscriptions`;
-DROP TABLE IF EXISTS `DemotionQueue`;
-DROP TABLE IF EXISTS `Users`;
-
 CREATE TABLE "AccountTypes" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "label" varchar
@@ -21,7 +9,6 @@ CREATE TABLE "Users" (
   "email" varchar,
   "bio" varchar,
   "username" varchar,
-  "password" varchar,
   "profile_image_url" varchar,
   "created_on" date,
   "active" bit,
@@ -91,13 +78,6 @@ CREATE TABLE "Categories" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "label" varchar
 );
-
-SELECT
-    c.id,
-    c.label
-FROM Categories c
-Order By label ASC
-
 INSERT INTO Categories ('label') VALUES ('News');
 INSERT INTO Categories ('label') VALUES ('Opinion');
 INSERT INTO Categories ('label') VALUES ('How-To');
