@@ -39,7 +39,10 @@ class HandleRequests(BaseHTTPRequestHandler):
             ( resource, id ) = parsed
 
             if resource == "categories":
+                if id is None:
                     response = f"{get_all_categories()}"
+                elif id is not None:
+                    pass
 
         self.wfile.write(response.encode())
 
