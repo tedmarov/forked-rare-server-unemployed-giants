@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from posts import get_all_posts
 from posts import create_post
 
 
@@ -35,6 +36,11 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse URL and store entire tuple in a variable
         parsed = self.parse_url(self.path)
+        if len(parsed) == 2:
+            (resource, id) = parsed
+
+            if resource == "posts":
+                response = f"{get_all_posts()}"
 
         self.wfile.write(response.encode())
 
