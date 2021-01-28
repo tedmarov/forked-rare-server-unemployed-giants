@@ -1,6 +1,6 @@
+from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -35,6 +35,15 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse URL and store entire tuple in a variable
         parsed = self.parse_url(self.path)
 
+        if len(parsed) == 2:
+            ( resource, id ) = parsed
+
+            if resource == "comments":
+                if id is None:
+                    response = f"{get_all_comments()}"
+                elif id is not None:
+                    pass
+
         self.wfile.write(response.encode())
 
     # Here's a method on the class that overrides the parent's method.
@@ -52,6 +61,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Initialize new animal
         new_resource = None
+
+        if resource == "comments":
+            new_resource = create_comment(post_body)
 
         self.wfile.write(f"{new_resource}".encode())
 
@@ -76,6 +88,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
+
+        if resource == "comments":
+            delete_comment(id)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
