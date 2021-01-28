@@ -98,6 +98,7 @@ INSERT INTO Categories ('label') VALUES ('Opinion');
 INSERT INTO Categories ('label') VALUES ('How-To');
 INSERT INTO Categories ('label') VALUES ('Editorial');
 INSERT INTO Categories ('label') VALUES ("Here's something dumb");
+
 INSERT INTO Tags ('label') VALUES ('JavaScript');
 INSERT INTO Tags ('label') VALUES ('React');
 INSERT INTO Tags ('label') VALUES ('Angular');
@@ -130,3 +131,5 @@ INSERT INTO Reactions ('label', 'image_url') VALUES ('heart', 'https://lh3.googl
 
 INSERT INTO AccountTypes ('label') VALUES ('Admin');
 INSERT INTO AccountTypes ('label') VALUES ('Author');
+
+INSERT INTO Users VALUES (1,'Ron','Swanson','ron@pawnee.gov','Nice stache','swanson','password' )

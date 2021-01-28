@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from posts import create_post
 
 
 # Here's a class. It inherits from another class.
@@ -52,6 +53,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Initialize new animal
         new_resource = None
+
+        if resource == "posts":
+            new_resource = create_post(post_body)
 
         self.wfile.write(f"{new_resource}".encode())
 
