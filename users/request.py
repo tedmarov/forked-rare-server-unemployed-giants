@@ -25,14 +25,16 @@ def register_user(user):
         user['account_type_id'] = account_type_id
         user['valid'] = True
 
-
         return json.dumps(user)
 
-def login_user(username, password):
+def login_user(user):
     #open a connection to the database
     with sqlite3.connect("./rare.db") as conn:
+        
+        conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
         
+        ##passing in post_body and accessing the username and password on the dictionary
         db_cursor.execute("""
         SELECT
             u.id,
@@ -47,13 +49,18 @@ def login_user(username, password):
             u.active
         FROM Users u
         WHERE u.username = ? AND u.password = ?
-        """, ( username, password ))
+        """, ( user['username'], user['password'] ))
 
         data = db_cursor.fetchone()
+        
+        #Create empty dictionary
+        user = {}
 
-        user = User(data['id'], data['first_name'], data['last_name'], data['email'], data['password'], data['bio'], data['username'], data['profile_image_url'], data['created_on'])
+        #Add on id from the found user and add True for valid to send to client
+        user['id'] = data['id']
+        user['valid'] = True
 
-        return json.dumps(user.__dict__)
+        return json.dumps(user)
 
 
 def get_user_by_id(id):
