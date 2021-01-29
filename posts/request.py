@@ -10,7 +10,7 @@ def get_all_posts():
         db_cursor.execute("""
         SELECT
             p.id,
-            p.post_id,
+            p.user_id,
             p.category_id,
             p.title,
             p.publication_date,
@@ -24,7 +24,7 @@ def get_all_posts():
         dataset = db_cursor.fetchall()
         for row in dataset:
 
-            post = Post(row['id'],row['post_id'], row['category_id'], row['title'],
+            post = Post(row['id'],row['user_id'], row['category_id'], row['title'],
             row['publication_date'], row['image_url'], row['content'],row['approved'])
 
             posts.append(post.__dict__)
@@ -37,11 +37,11 @@ def create_post(new_post):
 
         db_cursor.execute("""
         INSERT INTO Posts
-            (post_id, category_id, title, publication_date, image_url, content, approved)
+            (user_id, category_id, title, publication_date, image_url, content, approved)
         VALUES
             (?,?,?,?,?,?,?)
-        """,(new_post['post_id'], new_post['category_id'], new_post['title'],
-            new_post['publication_date'], new_post['image_url'], 
+        """,(new_post['userId'], new_post['categoryId'], new_post['title'],
+            new_post['publicationDate'], new_post['imageUrl'], 
             new_post['content'],new_post['approved'], ))
         
         id = db_cursor.lastrowid
