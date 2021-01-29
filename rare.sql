@@ -96,7 +96,7 @@ CREATE TABLE "Categories" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "label" varchar
 );
-<<<<<<< HEAD
+
 INSERT INTO Categories ('label') VALUES ('News');
 INSERT INTO Categories ('label') VALUES ('Opinion');
 INSERT INTO Categories ('label') VALUES ('How-To');

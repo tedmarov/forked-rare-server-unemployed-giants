@@ -5,6 +5,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from categories import get_all_categories, create_category
 from posts import get_all_posts
 from posts import create_post
+from tags import get_all_tags, create_tag,  delete_tag
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -54,6 +55,11 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_all_categories()}"
                 elif id is not None:
                     pass
+            if resource == "tags":
+                if id is None:
+                    response = f"{get_all_tags()}"
+                elif id is not None:
+                    pass
 
         self.wfile.write(response.encode())
 
@@ -75,18 +81,20 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "register":
             new_resource = register_user(post_body)
-
         if resource == "categories":
             new_resource = create_category(post_body)
         if resource == "comments":
             new_resource = create_comment(post_body)
         if resource == "posts":
             new_resource = create_post(post_body)
+        if resource == "tags":
+            new_resource = create_tag(post_body)
+
 
         self.wfile.write(f"{new_resource}".encode())
 
     # Here's a method on the class that overrides the parent's method.
-    # It handles any PUT request.
+    # It handles any PUT request. It deals with updating an existing row.
 
     def do_PUT(self):
         self._set_headers(204)
@@ -108,6 +116,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "comments":
             delete_comment(id)
+
+        if resource == "tags":
+            delete_tag(id)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
