@@ -3,7 +3,8 @@ import json
 from models import User
 from datetime import datetime
 
-def register_user(user):
+def register_user(user):    
+    #open a connection to the database
     with sqlite3.connect("./rare.db") as conn:
         db_cursor = conn.cursor()
 
@@ -26,6 +27,34 @@ def register_user(user):
 
 
         return json.dumps(user)
+
+def login_user(username, password):
+    #open a connection to the database
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+        
+        db_cursor.execute("""
+        SELECT
+            u.id,
+            u.first_name,
+            u.last_name,
+            u.email,
+            u.password,
+            u.bio,
+            u.username,
+            u.profile_image_url,
+            u.created_on,
+            u.active
+        FROM Users u
+        WHERE u.username = ? AND u.password = ?
+        """, ( username, password ))
+
+        data = db_cursor.fetchone()
+
+        user = User(data['id'], data['first_name'], data['last_name'], data['email'], data['password'], data['bio'], data['username'], data['profile_image_url'], data['created_on'])
+
+        return json.dumps(user.__dict__)
+
 
 def get_user_by_id(id):
      with sqlite3.connect("./rare.db") as conn:
