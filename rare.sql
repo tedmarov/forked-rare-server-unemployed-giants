@@ -1,5 +1,14 @@
-<<<<<<< HEAD
-=======
+DROP TABLE IF EXISTS `Categories`;
+DROP TABLE IF EXISTS `Tags`;
+DROP TABLE IF EXISTS `Reactions`;
+DROP TABLE IF EXISTS `PostReactions`;
+DROP TABLE IF EXISTS `Posts`;
+DROP TABLE IF EXISTS `PostTags`;
+DROP TABLE IF EXISTS `Comments`;
+DROP TABLE IF EXISTS `Subscriptions`;
+DROP TABLE IF EXISTS `DemotionQueue`;
+DROP TABLE IF EXISTS `Users`;
+
 CREATE TABLE "Users" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "first_name" varchar,
@@ -10,29 +19,11 @@ CREATE TABLE "Users" (
   "password" varchar,
   "profile_image_url" varchar,
   "created_on" date,
-  "active" bit,
-  "account_type_id" INTEGER,
-  FOREIGN KEY(`account_type_id`) REFERENCES `AccountTypes`(`id`)
+  "active" bit
 );
 
-CREATE TABLE "AccountTypes" (
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-  "label" varchar
-);
-CREATE TABLE "Users" (
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-  "first_name" varchar,
-  "last_name" varchar,
-  "email" varchar,
-  "bio" varchar,
-  "username" varchar,
-  "password" varchar,
-  "profile_image_url" varchar,
-  "created_on" date,
-  "active" bit,
-  "account_type_id" INTEGER,
-  FOREIGN KEY(`account_type_id`) REFERENCES `AccountTypes`(`id`)
-);
+
+
 CREATE TABLE "DemotionQueue" (
   "action" varchar,
   "admin_id" INTEGER,
@@ -133,11 +124,8 @@ INSERT INTO Tags ('label') VALUES ('History Lesson');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('heart', 'https://lh3.googleusercontent.com/proxy/BlwtWdiO1ucoroiKKuJN5CpiAUFA4tdHYRT_yXzxWLpNVTJS7UEVp1JV-lYshjAPeS7wd1pqXk6mpxY6rrSAPXD5NbBoE9hTf-1PpzofQbzNyH__1miggtO2IQKktovnAyPzjCW6T9mQG6JvgdHklZUaMd-YnIxeBPuP1lBw2E7fp9d6AR68');
 
-INSERT INTO AccountTypes ('label') VALUES ('Admin');
-INSERT INTO AccountTypes ('label') VALUES ('Author');
 
-INSERT INTO Users VALUES (1,'Ron','Swanson','ron@pawnee.gov','Nice stache','swanson','password' )
-=======
+-- INSERT INTO Users VALUES (1,'Ron','Swanson','ron@pawnee.gov','Nice stache','swanson','password' )
 INSERT INTO Categories ('label')
 VALUES ('News');
 INSERT INTO Categories ('label')
@@ -207,9 +195,3 @@ VALUES (
     'heart',
     'https://lh3.googleusercontent.com/proxy/BlwtWdiO1ucoroiKKuJN5CpiAUFA4tdHYRT_yXzxWLpNVTJS7UEVp1JV-lYshjAPeS7wd1pqXk6mpxY6rrSAPXD5NbBoE9hTf-1PpzofQbzNyH__1miggtO2IQKktovnAyPzjCW6T9mQG6JvgdHklZUaMd-YnIxeBPuP1lBw2E7fp9d6AR68'
   );
-INSERT INTO AccountTypes ('label')
-VALUES ('Admin');
-INSERT INTO AccountTypes ('label')
-VALUES ('Author');
->>>>>>> main
->>>>>>> main
