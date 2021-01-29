@@ -1,5 +1,5 @@
 import json
-from users import register_user
+from users import register_user, get_user_by_id
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from categories import get_all_categories, create_category
@@ -60,6 +60,11 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_all_tags()}"
                 elif id is not None:
                     pass
+            if resource == "users":
+                if id is None:
+                   pass
+                elif id is not None:
+                   response = f"{get_user_by_id(id)}"
 
         self.wfile.write(response.encode())
 
