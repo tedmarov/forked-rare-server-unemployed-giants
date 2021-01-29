@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 CREATE TABLE "Users" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "first_name" varchar,
@@ -19,20 +17,7 @@ CREATE TABLE "AccountTypes" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "label" varchar
 );
-CREATE TABLE "Users" (
-  "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-  "first_name" varchar,
-  "last_name" varchar,
-  "email" varchar,
-  "bio" varchar,
-  "username" varchar,
-  "password" varchar,
-  "profile_image_url" varchar,
-  "created_on" date,
-  "active" bit,
-  "account_type_id" INTEGER,
-  FOREIGN KEY(`account_type_id`) REFERENCES `AccountTypes`(`id`)
-);
+
 CREATE TABLE "DemotionQueue" (
   "action" varchar,
   "admin_id" INTEGER,
@@ -211,5 +196,4 @@ INSERT INTO AccountTypes ('label')
 VALUES ('Admin');
 INSERT INTO AccountTypes ('label')
 VALUES ('Author');
->>>>>>> main
 >>>>>>> main
