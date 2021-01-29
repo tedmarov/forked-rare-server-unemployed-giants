@@ -1,10 +1,11 @@
 import json
-from users import register_user
+from users.request import login_user
+from users import register_user, get_user_by_id, login_user
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from categories import get_all_categories, create_category
 from posts import get_all_posts
-from posts import create_post
+from posts import create_post, get_post_by_id
 from tags import get_all_tags, create_tag,  delete_tag
 
 # Here's a class. It inherits from another class.
@@ -47,6 +48,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             if resource == "posts":
                 if id is None:
                     response = f"{get_all_posts()}"
+                elif id is not None:
+                    response = f"{get_post_by_id(id)}"
             if resource == "comments":
                 if id is None:
                     response = f"{get_all_comments()}"
@@ -60,6 +63,11 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_all_tags()}"
                 elif id is not None:
                     pass
+            if resource == "users":
+                if id is None:
+                   pass
+                elif id is not None:
+                   response = f"{get_user_by_id(id)}"
 
         self.wfile.write(response.encode())
 
@@ -81,6 +89,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "register":
             new_resource = register_user(post_body)
+        if resource == "login":
+            new_resource = login_user(post_body)
         if resource == "categories":
             new_resource = create_category(post_body)
         if resource == "comments":
