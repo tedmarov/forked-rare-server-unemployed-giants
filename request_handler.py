@@ -5,7 +5,7 @@ from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from categories import get_all_categories, create_category
 from posts import get_all_posts
-from posts import create_post, get_post_by_id
+from posts import create_post, get_post_by_id, delete_post
 from tags import get_all_tags, create_tag,  delete_tag
 from posts import get_user_posts
 
@@ -43,7 +43,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse URL and store entire tuple in a variable
         parsed = self.parse_url(self.path)
-      
+
         if len(parsed) == 2:
             (resource, id) = parsed
             if resource == "posts":
@@ -66,10 +66,11 @@ class HandleRequests(BaseHTTPRequestHandler):
                     pass
             if resource == "users":
                 if id is None:
-                   pass
+                    pass
                 elif id is not None:
-                   response = f"{get_user_by_id(id)}"
-        
+
+                    response = f"{get_user_by_id(id)}"
+
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
@@ -91,9 +92,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Initialize new 
+        # Initialize new
         new_resource = None
-        
+
         if resource == "register":
             new_resource = register_user(post_body)
         if resource == "login":
@@ -106,7 +107,6 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_resource = create_post(post_body)
         if resource == "tags":
             new_resource = create_tag(post_body)
-
 
         self.wfile.write(f"{new_resource}".encode())
 
@@ -136,6 +136,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "tags":
             delete_tag(id)
+
+        if resource == "posts":
+            delete_post(id)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
@@ -168,6 +171,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 pass  # Request had trailing slash: /animals/
 
             return (resource, id)
+
+
 def main():
     host = ''
     port = 8088
