@@ -7,6 +7,7 @@ from categories import get_all_categories, create_category
 from posts import get_all_posts
 from posts import create_post, get_post_by_id
 from tags import get_all_tags, create_tag,  delete_tag
+from posts import get_user_posts
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -68,6 +69,12 @@ class HandleRequests(BaseHTTPRequestHandler):
                    pass
                 elif id is not None:
                    response = f"{get_user_by_id(id)}"
+        
+        elif len(parsed) == 3:
+            (resource, key, value) = parsed
+
+            if key == "user_id" and resource == "posts":
+                response = get_user_posts(value)
 
         self.wfile.write(response.encode())
 
