@@ -1,4 +1,5 @@
 import json
+from posttags.request import create_post_tag, get_all_post_tags
 from users.request import login_user
 from users import register_user, get_user_by_id, login_user
 from comments import create_comment, delete_comment, get_all_comments
@@ -68,6 +69,9 @@ class HandleRequests(BaseHTTPRequestHandler):
                    pass
                 elif id is not None:
                    response = f"{get_user_by_id(id)}"
+            if resource == "postTags":
+                if id is None:
+                    response = f"{get_all_post_tags()}"
 
         self.wfile.write(response.encode())
 
@@ -99,6 +103,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_resource = create_post(post_body)
         if resource == "tags":
             new_resource = create_tag(post_body)
+        if resource == "postTags":
+            new_resource = create_post_tag(post_body)
 
 
         self.wfile.write(f"{new_resource}".encode())

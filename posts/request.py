@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import Post
+from models import Post, Tag
 
 def get_all_posts():
     with sqlite3.connect("./rare.db") as conn:
@@ -16,19 +16,42 @@ def get_all_posts():
             p.publication_date,
             p.image_url,
             p.content,
-            p.approved
+            p.approved,
+            b.post_id,
+            b.tag_id,
+            t.label
         FROM Posts p
+        LEFT JOIN PostTags b
+        on p.id == b.post_id
+        LEFT JOIN Tags t
+        on t.id == b.tag_id
         """)
 
-        posts = []
+        posts = {}
         dataset = db_cursor.fetchall()
         for row in dataset:
+            if row['id'] in posts:
+                tag = Tag(row['tag_id'], row['label'])
+                posts[row['id']].tags.append(tag.__dict__)
 
-            post = Post(row['id'],row['user_id'], row['category_id'], row['title'],
-            row['publication_date'], row['image_url'], row['content'],row['approved'])
+                posts.append(tag.__dict__)
 
-            posts.append(post.__dict__)
-    return json.dumps(posts)
+            else:
+                post = Post(row['id'],row['user_id'], row['category_id'], row['title'],
+                row['publication_date'], row['content'],row['approved'], row['image_url'])
+
+                posts[row['id']] = post
+
+                tag = Tag(row['tag_id'], row['label'])
+                posts[row['id']].tags = []
+                posts[row['id']].tags.append(tag.__dict__)
+
+
+        dict_posts = []
+        for post in posts.values():
+            dict_posts.append(post.__dict__)
+
+    return json.dumps(dict_posts)
 
 
 def create_post(new_post):
