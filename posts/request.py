@@ -35,11 +35,6 @@ def get_all_posts():
                 tag = Tag(row['tag_id'], row['label'])
                 posts[row['id']].tags.append(tag.__dict__)
 
-<<<<<<< HEAD
-=======
-            post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
-                        row['publication_date'], row['image_url'], row['content'], row['approved'])
->>>>>>> main
 
             else:
                 post = Post(row['id'],row['user_id'], row['category_id'], row['title'],
