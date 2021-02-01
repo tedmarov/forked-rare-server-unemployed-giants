@@ -69,18 +69,13 @@ class HandleRequests(BaseHTTPRequestHandler):
                     pass
                 elif id is not None:
 
-
-<< << << < HEAD
                     response = f"{get_user_by_id(id)}"
-== == == =
-                   response = f"{get_user_by_id(id)}"
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
             if key == "user_id" and resource == "posts":
                 response = get_user_posts(value)
->>>>>>> main
 
         self.wfile.write(response.encode())
 
