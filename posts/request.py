@@ -113,7 +113,7 @@ def get_post_by_id(id):
             t.label
         FROM PostTags p
         LEFT JOIN Tags t ON p.tag_id = t.id
-        WHERE p.id = ?
+        WHERE p.post_id = ?
         """, ( post['id'], ))
 
         dataset = db_cursor.fetchall()
