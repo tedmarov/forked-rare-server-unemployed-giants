@@ -34,7 +34,6 @@ def get_all_posts():
                 tag = Tag(row['tag_id'], row['label'])
                 posts[row['id']].tags.append(tag.__dict__)
 
-                posts.append(tag.__dict__)
 
             else:
                 post = Post(row['id'],row['user_id'], row['category_id'], row['title'],
@@ -104,6 +103,28 @@ def get_post_by_id(id):
 
         post['author'] = data['username']
         post['category'] = data['label']
+
+        db_cursor.execute("""
+        SELECT
+            p.id,
+            p.post_id,
+            p.tag_id,
+            t.id,
+            t.label
+        FROM PostTags p
+        LEFT JOIN Tags t ON p.tag_id = t.id
+        WHERE p.id = ?
+        """, ( post['id'], ))
+
+        dataset = db_cursor.fetchall()
+
+        tags = []
+
+        for row in dataset:
+            tag = Tag(row['tag_id'], row['label'])
+            tags.append(tag.__dict__)
+
+        post['tags'] = tags
 
         return json.dumps(post)
 
