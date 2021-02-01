@@ -56,9 +56,13 @@ def login_user(user):
         #Create empty dictionary
         user = {}
 
-        #Add on id from the found user and add True for valid to send to client
-        user['id'] = data['id']
-        user['valid'] = True
+        #Checks if fetchone() returned a user or None
+        if data != None:
+            #Add on id from the found user and add True for valid to send to client
+            user['id'] = data['id']
+            user['valid'] = True
+        else:
+            user['valid'] = False
 
         return json.dumps(user)
 
