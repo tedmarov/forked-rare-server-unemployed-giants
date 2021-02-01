@@ -95,4 +95,32 @@ def get_user_by_id(id):
 
         return json.dumps(user.__dict__)
 
+def get_user_by_email(email):
+     with sqlite3.connect("./rare.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        #Set values passed in from form
+        db_cursor.execute("""
+        SELECT
+            u.id,
+            u.first_name,
+            u.last_name,
+            u.email,
+            u.password,
+            u.bio,
+            u.username,
+            u.profile_image_url,
+            u.created_on,
+            u.active
+        FROM Users u
+        WHERE u.email LIKE ?
+        """, ("%" + email + "%", ))
+
+        data = db_cursor.fetchone()
+
+        user = User(data['id'], data['first_name'], data['last_name'], data['email'], data["password"], data['bio'], data["username"], data["profile_image_url"], data["created_on"])
+
+        return json.dumps(user.__dict__)
+
 

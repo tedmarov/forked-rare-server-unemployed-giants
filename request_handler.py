@@ -1,7 +1,7 @@
 import json
 from posttags.request import create_post_tag, get_all_post_tags
 from users.request import login_user
-from users import register_user, get_user_by_id, login_user
+from users import register_user, get_user_by_id, login_user, get_user_by_email
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from categories import get_all_categories, create_category
@@ -81,6 +81,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             if key == "user_id" and resource == "posts":
                 response = get_user_posts(value)
+            if key == "email" and resource == "users":
+                response = get_user_by_email(value)
 
         self.wfile.write(response.encode())
 
