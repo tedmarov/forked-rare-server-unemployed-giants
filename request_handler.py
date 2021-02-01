@@ -75,7 +75,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             (resource, key, value) = parsed
 
             if key == "user_id" and resource == "posts":
-                response = get_user_posts(value)
+                response = f"{get_user_posts(value)}"
 
         self.wfile.write(response.encode())
 
