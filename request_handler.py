@@ -1,12 +1,13 @@
 import json
-from posts.request import delete_post
-from users import register_user, get_user_by_id
+from users.request import login_user
+from users import register_user, get_user_by_id, login_user
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from categories import get_all_categories, create_category
 from posts import get_all_posts
-from posts import create_post
+from posts import create_post, get_post_by_id, delete_post
 from tags import get_all_tags, create_tag,  delete_tag
+from posts import get_user_posts
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
@@ -48,6 +49,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             if resource == "posts":
                 if id is None:
                     response = f"{get_all_posts()}"
+                elif id is not None:
+                    response = f"{get_post_by_id(id)}"
             if resource == "comments":
                 if id is None:
                     response = f"{get_all_comments()}"
@@ -65,7 +68,19 @@ class HandleRequests(BaseHTTPRequestHandler):
                 if id is None:
                     pass
                 elif id is not None:
+
+
+<< << << < HEAD
                     response = f"{get_user_by_id(id)}"
+== == == =
+                   response = f"{get_user_by_id(id)}"
+
+        elif len(parsed) == 3:
+            (resource, key, value) = parsed
+
+            if key == "user_id" and resource == "posts":
+                response = get_user_posts(value)
+>>>>>>> main
 
         self.wfile.write(response.encode())
 
@@ -87,6 +102,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "register":
             new_resource = register_user(post_body)
+        if resource == "login":
+            new_resource = login_user(post_body)
         if resource == "categories":
             new_resource = create_category(post_body)
         if resource == "comments":
