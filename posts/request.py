@@ -157,6 +157,7 @@ def get_user_posts(user_id):
             p.content,
             p.approved
         FROM Posts p
+        Where p.user_id = ?
         """, (user_id,))
 
         posts = []
