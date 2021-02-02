@@ -119,8 +119,17 @@ def get_user_by_email(email):
 
         data = db_cursor.fetchone()
 
-        user = User(data['id'], data['first_name'], data['last_name'], data['email'], data["password"], data['bio'], data["username"], data["profile_image_url"], data["created_on"])
+        user = {}
 
-        return json.dumps(user.__dict__)
+        if data != None:
+            #Add on id from the found user and add True for valid to send to client
+            user['email'] = data['email']
+            
+        else:
+            user['email'] = ''
+
+        
+
+        return json.dumps(user)
 
 
