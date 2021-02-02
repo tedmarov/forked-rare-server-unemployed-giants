@@ -66,6 +66,40 @@ def login_user(user):
 
         return json.dumps(user)
 
+def get_all_users():
+     
+     with sqlite3.connect("./rare.db") as conn:
+
+        # Just use these. It's a Black Box.
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+            SELECT
+            u.id,
+            u.first_name,
+            u.last_name,
+            u.email,
+            u.password,
+            u.bio,
+            u.username,
+            u.profile_image_url,
+            u.created_on,
+            u.active
+            FROM Users u
+        """)
+
+        users = []
+
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+            user = User(row['id'], row['first_name'], row['last_name'], row['email'], row["password"], row['bio'], row["username"], row["profile_image_url"], row['active'], row["created_on"])
+
+            users.append(user.__dict__)
+
+        return json.dumps(users)
 
 def get_user_by_id(id):
      with sqlite3.connect("./rare.db") as conn:

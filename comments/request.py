@@ -1,6 +1,8 @@
 import sqlite3
 import json
 from models import Comment
+from datetime import datetime
+
 
 def get_all_comments():
     # Open a connection to the database
@@ -16,7 +18,8 @@ def get_all_comments():
         a.id,
         a.post_id,
         a.author_id,
-        a.content
+        a.content,
+        a.time
         FROM Comments a
         """)
 
@@ -29,7 +32,7 @@ def get_all_comments():
         # Iterate list of data returned from database
         for row in dataset:
 
-            comment = Comment(row["id"], row["post_id"], row["author_id"], row["content"])
+            comment = Comment(row["id"], row["post_id"], row["author_id"], row["content"], row["time"])
             # Add the dictionary representation of the animal to the list
             comments.append(comment.__dict__)
 
@@ -44,11 +47,11 @@ def create_comment(new_comment):
 
         db_cursor.execute("""
         INSERT INTO Comments
-            ( post_id, author_id, content )
+            ( post_id, author_id, content, time )
         VALUES
-            ( ?, ?, ? );
+            ( ?, ?, ?, ? );
         """, (new_comment['post_id'], new_comment['author_id'],
-              new_comment['content'], ))
+              new_comment['content'], datetime.now() ))
 
 
         id = db_cursor.lastrowid

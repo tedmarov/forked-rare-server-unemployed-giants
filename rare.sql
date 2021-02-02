@@ -22,6 +22,8 @@ CREATE TABLE "Users" (
   "active" bit
 );
 
+ALTER TABLE "Comments"
+ADD COLUMN "time" DATETIME;
 
 
 CREATE TABLE "DemotionQueue" (

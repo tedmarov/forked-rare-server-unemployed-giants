@@ -1,1 +1,1 @@
-from .request import register_user, get_user_by_id, login_user, get_user_by_email
+from .request import register_user, get_user_by_id, login_user, get_user_by_email, get_all_users

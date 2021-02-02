@@ -1,7 +1,7 @@
 import json
 from posttags.request import create_post_tag, get_all_post_tags
 from users.request import login_user
-from users import register_user, get_user_by_id, login_user, get_user_by_email
+from users import register_user, get_user_by_id, login_user, get_user_by_email, get_all_users
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from categories import get_all_categories, create_category, delete_category
@@ -67,7 +67,7 @@ class HandleRequests(BaseHTTPRequestHandler):
                     pass
             if resource == "users":
                 if id is None:
-                    pass
+                    response = f"{get_all_users()}"
                 elif id is not None:
                    response = f"{get_user_by_id(id)}"
             if resource == "postTags":
