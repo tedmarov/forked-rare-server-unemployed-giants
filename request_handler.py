@@ -1,9 +1,10 @@
 import json
+from posttags.request import create_post_tag, get_all_post_tags
 from users.request import login_user
-from users import register_user, get_user_by_id, login_user
+from users import register_user, get_user_by_id, login_user, get_user_by_email
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from categories import get_all_categories, create_category
+from categories import get_all_categories, create_category, delete_category
 from posts import get_all_posts
 from posts import create_post, get_post_by_id, delete_post
 from tags import get_all_tags, create_tag,  delete_tag
@@ -68,14 +69,20 @@ class HandleRequests(BaseHTTPRequestHandler):
                 if id is None:
                     pass
                 elif id is not None:
-
+                   response = f"{get_user_by_id(id)}"
+            if resource == "postTags":
+                if id is None:
+                    response = f"{get_all_post_tags()}"
+                else:
                     response = f"{get_user_by_id(id)}"
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
             if key == "user_id" and resource == "posts":
-                response = f"{get_user_posts(value)}"
+                response = get_user_posts(value)
+            if key == "email" and resource == "users":
+                response = get_user_by_email(value)
 
         self.wfile.write(response.encode())
 
@@ -107,6 +114,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_resource = create_post(post_body)
         if resource == "tags":
             new_resource = create_tag(post_body)
+        if resource == "postTags":
+            new_resource = create_post_tag(post_body)
 
         self.wfile.write(f"{new_resource}".encode())
 
@@ -137,6 +146,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == "tags":
             delete_tag(id)
 
+        if resource == "categories":
+            delete_category(id)
+            
         if resource == "posts":
             delete_post(id)
 
