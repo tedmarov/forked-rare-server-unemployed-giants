@@ -4,7 +4,7 @@ from users.request import login_user
 from users import register_user, get_user_by_id, login_user
 from comments import create_comment, delete_comment, get_all_comments
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from categories import get_all_categories, create_category
+from categories import get_all_categories, create_category, delete_category
 from posts import get_all_posts
 from posts import create_post, get_post_by_id, delete_post
 from tags import get_all_tags, create_tag,  delete_tag
@@ -144,6 +144,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == "tags":
             delete_tag(id)
 
+        if resource == "categories":
+            delete_category(id)
+            
         if resource == "posts":
             delete_post(id)
 
