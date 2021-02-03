@@ -11,6 +11,7 @@ def get_all_tags():
         db_cursor = conn.cursor()
 
         # Write the SQL query to get the information you want
+        # This grabs the tags and orders them alphabetically, i.e. Ascending
         db_cursor.execute("""
             SELECT
                 t.id,
@@ -64,6 +65,7 @@ def get_single_tag(id):
 
     return json.dumps(tag.__dict__)
 
+#To create a new tag, provide a label and the id autoincrements
 def create_tag(new_tag):
     with sqlite3.connect("./rare.db") as conn:
         db_cursor = conn.cursor()
@@ -87,6 +89,7 @@ def create_tag(new_tag):
 
     return json.dumps(new_tag)
 
+# To delete a tag, an id must be specified
 def delete_tag(id):
     with sqlite3.connect("./rare.db") as conn:
         db_cursor = conn.cursor()
@@ -96,6 +99,7 @@ def delete_tag(id):
         Where id = ?
         """, (id, ))
 
+# This is unused, but it should work
 def update_tag(id, new_tag):
     with sqlite3.connect("./rare.db") as conn:
         db_cursor = conn.cursor()
@@ -104,7 +108,7 @@ def update_tag(id, new_tag):
         Update Tag
             Set
                 label = ?
-        Where id = 
+        Where id = ?
         """, (new_tag['label'], id, ))
 
         # Were any rows affected?

@@ -12,6 +12,7 @@ def get_all_categories():
         db_cursor = conn.cursor()
 
         # Write the SQL query to get the information you want
+        # Grab the categories, order by the label alphabetically, i.e. ASC
         db_cursor.execute("""
             SELECT
                 c.id,
@@ -40,7 +41,7 @@ def get_all_categories():
     # Use `json` package to properly serialize list as JSON
     return json.dumps(categories)
 
-
+# Creates a new category, just provide label, id autoincrements
 def create_category(new_category):
     with sqlite3.connect("./rare.db") as conn:
         db_cursor = conn.cursor()
@@ -64,6 +65,7 @@ def create_category(new_category):
 
     return json.dumps(new_category)
 
+# Delete a category by specific ID
 def delete_category(id):
     with sqlite3.connect("./rare.db") as conn:
         db_cursor = conn.cursor()
