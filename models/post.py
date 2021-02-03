@@ -1,3 +1,9 @@
+# PURPOSE: This module defines the blueprint for the Post class
+
+# Class initializer. It has 8 custom parameters, with the
+# special `self` parameter that every method on a class
+# needs as the first parameter.
+
 class Post():
 
     def __init__(self, id, user_id, category_id, title, publication_date, 

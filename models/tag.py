@@ -1,3 +1,5 @@
+# PURPOSE: This module defines the blueprint for the Tag class
+
 class Tag():
 
     # Class initializer. It has 2 custom parameters, with the

@@ -32,6 +32,10 @@ def get_all_posts():
         posts = {}
 
         dataset = db_cursor.fetchall()
+
+        # Doing this because: This is a many to many relationship; there can be many tags on any one post. 
+        # If there were no if statement, it would add duplicates for however many tags a post had. 
+        # ex. If post_id 1 had 10 tags, it would return that same post 10 times
         for row in dataset:
             #Checks to see if the key coresponding to that row's id is in the dictionary already.
             if row['id'] in posts:
@@ -48,7 +52,7 @@ def get_all_posts():
                 #This becomes the key, and the post is the value.
                 posts[row['id']] = post
 
-
+                # First you mamke post above, then add on tag
                 tag = Tag(row['tag_id'], row['label'])
                 
                 #Creates and then appends the tag key as a key/value pair nested in the bigger posts dictionary
@@ -57,6 +61,8 @@ def get_all_posts():
 
 
         #Makes a list, then loops through the values of posts (ignoring the keys) and puts every value into dict_posts as a dictionary, so we have a list of dictionaries like normal to send to the server
+        # post.values() takes the big dictionaries and strips the keys and only shows the values
+        # Need to do this so we don't have key of 1 and value of entire dictionary, so we just have dictionaries
         dict_posts = []
         for post in posts.values():
             dict_posts.append(post.__dict__)
