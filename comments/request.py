@@ -1,6 +1,9 @@
 import sqlite3
 import json
 from models import Comment
+## import datetime from datetime so we don't get everything in datetime package.
+## if just import datetime, you'll get everything. Now we only get datetime
+## datetime is a function in the datetime package
 from datetime import datetime
 
 
@@ -52,11 +55,12 @@ def create_comment(new_comment):
             ( ?, ?, ?, ? );
         """, (new_comment['post_id'], new_comment['author_id'],
               new_comment['content'], datetime.now() ))
+              ## .now gets date and time right now
 
 
         id = db_cursor.lastrowid
 
-        # Add the `id` property to the animal dictionary that
+        # Add the `id` property to the comment dictionary that
         # was sent by the client so that the client sees the
         # primary key in the response.
         new_comment['id'] = id

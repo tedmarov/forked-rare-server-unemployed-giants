@@ -23,6 +23,7 @@ def register_user(user):
         #Add the created things to the user being created
         user['id'] = id
         user['account_type_id'] = account_type_id
+        # Add valid so they can log in, necessary client side
         user['valid'] = True
 
         return json.dumps(user)
@@ -31,6 +32,7 @@ def login_user(user):
     #open a connection to the database
     with sqlite3.connect("./rare.db") as conn:
         
+        #dictionary cursor: makes dictionaries instead of tuples when returning rows from fetch
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
         
@@ -61,6 +63,7 @@ def login_user(user):
             #Add on id from the found user and add True for valid to send to client
             user['id'] = data['id']
             user['valid'] = True
+            #If password incorrect or user doesn't exist, passes valid = false to client
         else:
             user['valid'] = False
 
@@ -155,10 +158,10 @@ def get_user_by_email(email):
 
         user = {}
 
+        # If a user is found by email, send email back to client
         if data != None:
-            #Add on id from the found user and add True for valid to send to client
             user['email'] = data['email']
-            
+        # If a user isn't found by email, send back empty string as email 
         else:
             user['email'] = ''
 
