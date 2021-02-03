@@ -28,25 +28,35 @@ def get_all_posts():
         on t.id == b.tag_id
         """)
 
+        # Initializes posts as an empy dict instead of a list
         posts = {}
+
         dataset = db_cursor.fetchall()
         for row in dataset:
+            #Checks to see if the key coresponding to that row's id is in the dictionary already.
             if row['id'] in posts:
+                #If it is, takes the tag_id and label responses from that query and appends them to the tags list that is a nested dictionary within the bigger posts dictionary
                 tag = Tag(row['tag_id'], row['label'])
                 posts[row['id']].tags.append(tag.__dict__)
 
 
             else:
+                #If a key doesn't exist corresponding with the post's id, it makes a new key/value pair in the dict
                 post = Post(row['id'],row['user_id'], row['category_id'], row['title'],
                 row['publication_date'], row['content'],row['approved'], row['image_url'])
 
+                #This becomes the key, and the post is the value.
                 posts[row['id']] = post
 
+
                 tag = Tag(row['tag_id'], row['label'])
+                
+                #Creates and then appends the tag key as a key/value pair nested in the bigger posts dictionary
                 posts[row['id']].tags = []
                 posts[row['id']].tags.append(tag.__dict__)
 
 
+        #Makes a list, then loops through the values of posts (ignoring the keys) and puts every value into dict_posts as a dictionary, so we have a list of dictionaries like normal to send to the server
         dict_posts = []
         for post in posts.values():
             dict_posts.append(post.__dict__)
@@ -87,7 +97,6 @@ def get_post_by_id(id):
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
-        # Set values passed in from form
         db_cursor.execute("""
         SELECT
             u.id,
@@ -113,9 +122,12 @@ def get_post_by_id(id):
 
         post = post.__dict__
 
+        #sets two properties acquired from the join that are not automatically on the Post model
         post['author'] = data['username']
         post['category'] = data['label']
 
+
+        #Queries for all instances of tag/post many to many relationships and gets the appriopriate tag information
         db_cursor.execute("""
         SELECT
             p.id,
@@ -132,10 +144,12 @@ def get_post_by_id(id):
 
         tags = []
 
+        #Loops through and creates appropriate tags for each tag/post relationship
         for row in dataset:
             tag = Tag(row['tag_id'], row['label'])
             tags.append(tag.__dict__)
 
+        #Assigns all tags associated with a post as a list that is the value of the 'tags' key
         post['tags'] = tags
 
         return json.dumps(post)
