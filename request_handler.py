@@ -45,6 +45,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse URL and store entire tuple in a variable
         parsed = self.parse_url(self.path)
 
+        #All of these take into account the resource to be used and an optional ID, via if else statement
         if len(parsed) == 2:
             (resource, id) = parsed
             if resource == "posts":
@@ -99,7 +100,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Initialize new
+        # Initialize new resource. Decided to recycle variable.
         new_resource = None
 
         if resource == "register":
@@ -121,6 +122,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any PUT request. It deals with updating an existing row.
+    # PUT/Update is not used
 
     def do_PUT(self):
         self._set_headers(204)
@@ -161,8 +163,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Check if there is a query string parameter
         if "?" in resource:
-            # GIVEN: /customers?email=jenna@solis.com
 
+            # GIVEN: /customers?email=jenna@solis.com
+            # This is based on kennels. It splitss resources on key value pairs.
             param = resource.split("?")[1]  # email=jenna@solis.com
             resource = resource.split("?")[0]  # 'customers'
             pair = param.split("=")  # [ 'email', 'jenna@solis.com' ]
