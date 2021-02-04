@@ -1,1 +1,1 @@
-web: gunicorn request_handler.py:rare.py
+web: watchgod request_handler.main
