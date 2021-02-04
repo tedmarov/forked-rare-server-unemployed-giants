@@ -1,2 +1,2 @@
-web: gunicorn request_handler.py:rare
-web: gunicorn request_handler.py:rare.py
+web: gunicorn request_handler.main:rare
+web: gunicorn request_handler.main:rare.py
